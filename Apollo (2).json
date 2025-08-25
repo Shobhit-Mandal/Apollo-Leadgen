@@ -1,0 +1,293 @@
+{
+  "name": "Apollo",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/microworlds~apollo-scraper/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer apify_token_here"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contact_email_exclude_catch_all\": false,\n  \"contact_email_status_v2_verified\": true,\n  \"include_email\": true,\n  \"max_result\": {{ $('On form submission').item.json['Maximum Results'] }},\n  \"url\": \"{{ $('On form submission').item.json['Apollo URL'] }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "a3fa7d92-3801-4680-a566-a11b70c17aae",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "25c3b245-d004-4133-90cf-fe0344b5b921",
+              "name": "first_name",
+              "value": "={{ $json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "5fe174d4-6609-4bf8-b480-d9ee4ccaf10d",
+              "name": "last_name",
+              "value": "={{ $json.last_name }}",
+              "type": "string"
+            },
+            {
+              "id": "74fb5555-8f83-492d-8f3d-5aef1e9e11dd",
+              "name": "linkedin_url",
+              "value": "={{ $json.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "80c93316-eeaf-4ada-9a04-5655eb588ae3",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "2bba96a3-b4cb-4f07-b99d-f21e9a9dd367",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "ee2f9d5f-69f3-48d0-a47a-b1f3a310717a",
+              "name": "country",
+              "value": "={{ $json.country }}",
+              "type": "string"
+            },
+            {
+              "id": "cce49ea8-1267-489f-8f18-1c8248ff8b5c",
+              "name": "state",
+              "value": "={{ $json.state }}",
+              "type": "string"
+            },
+            {
+              "id": "a0ea8aef-bcac-44a2-819d-9dbf306e97b0",
+              "name": "city",
+              "value": "={{ $json.city }}",
+              "type": "string"
+            },
+            {
+              "id": "562ec16f-a766-45d9-970d-0c7dfde6f576",
+              "name": "organization_name",
+              "value": "={{ $json.organization.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a6238ef1-a2e6-478f-bb72-310dfe9b5f47",
+              "name": "organization_website_url",
+              "value": "={{ $json.organization.website_url }}",
+              "type": "string"
+            },
+            {
+              "id": "c237da0e-abf9-49b2-8902-45737bdb51bd",
+              "name": "organization_linkedin_url",
+              "value": "={{ $json.organization.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "61192110-b388-449b-99ab-e26949b67ea5",
+              "name": "organization_primary_domain",
+              "value": "={{ $json.organization.primary_domain }}",
+              "type": "string"
+            },
+            {
+              "id": "5c123532-1d14-4071-aa0a-f63b433dfec1",
+              "name": "departments",
+              "value": "={{ $json.departments }}",
+              "type": "array"
+            },
+            {
+              "id": "08f103ed-0f8d-452d-aac2-e7884df9f19a",
+              "name": "seniority",
+              "value": "={{ $json.seniority }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        0
+      ],
+      "id": "242e81b1-6cad-449d-a47b-f22bbdb06cb6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "formTitle": "Apollo Data Scraper",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Apollo URL",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Maximum Results",
+              "fieldType": "number",
+              "placeholder": "100",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Google sheet name",
+              "placeholder": "ABC Agency",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "68a2ae49-ca49-4836-aa27-9a6657d7bfff",
+      "name": "On form submission",
+      "webhookId": "561c5142-b82e-4249-839b-c3beb1a3a79f"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "13htftH_hH9hvBBao5nXI5njsG9pOJHe1Ekhd0TUJN8c",
+          "mode": "list",
+          "cachedResultName": "Apollo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13htftH_hH9hvBBao5nXI5njsG9pOJHe1Ekhd0TUJN8c/edit?usp=drivesdk"
+        },
+        "title": "={{ $json['Google sheet name'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        0
+      ],
+      "id": "55284045-5177-4229-87f7-b80246ac1a08",
+      "name": "Create sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "iSQRtblSFRnw8muO",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "13htftH_hH9hvBBao5nXI5njsG9pOJHe1Ekhd0TUJN8c",
+          "mode": "list",
+          "cachedResultName": "Apollo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13htftH_hH9hvBBao5nXI5njsG9pOJHe1Ekhd0TUJN8c/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['Google sheet name'] }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        840,
+        0
+      ],
+      "id": "fc87c4e3-9fe4-4e9f-a4d1-fce3d4ea8297",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "iSQRtblSFRnw8muO",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Create sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c7561677-0bbe-49f3-963b-01aa8d2be7ed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "96bfcbb29f60f29fd3e3d2eeb71e81d33de0eb28944634e7c19762a8093e330d"
+  },
+  "id": "CSw3XEqw4cO6hKqG",
+  "tags": []
+}
