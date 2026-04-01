@@ -1,105 +1,69 @@
-Apollo Lead Scraper Workflow (n8n)
-📌 Overview
+# Apollo Lead Extraction System
 
-This n8n workflow automates the process of extracting verified contact details from Apollo (via Apify’s Apollo Scraper) and saves them directly into Google Sheets.
-It is designed for agencies or teams who want to collect targeted lead data (emails, job titles, LinkedIn profiles, company details, etc.) without manual effort.
+A lightweight automation workflow that extracts verified B2B leads from Apollo and structures them into usable datasets using n8n and APIs.
 
-The workflow runs through a form submission, scrapes data, processes it, and updates a Google Sheet in real-time.
+---
 
-⚙️ Workflow Steps
+## 🚀 Problem
 
-Form Trigger
+Teams using Apollo for lead generation still face friction:
 
-Users input:
+- manual exporting and filtering of contacts  
+- inconsistent data quality  
+- time spent cleaning and organizing leads  
+- lack of structured pipeline for storing results  
 
-Apollo URL (search or people filter link from Apollo)
+This slows down outreach workflows and reduces efficiency.
 
-Maximum Results (e.g., 100)
+---
 
-Google Sheet Name (destination sheet name)
+## ⚙️ Solution
 
-Google Sheets (Create Sheet)
+Designed a workflow that:
 
-Creates a new sheet (if it doesn’t already exist) with the given name.
+1. Takes a filtered Apollo search URL as input  
+2. Extracts verified contact data using Apify  
+3. Structures and standardizes lead information  
+4. Automatically stores results into Google Sheets  
 
-HTTP Request (Apify - Apollo Scraper)
+---
 
-Calls the Apify actor microworlds~apollo-scraper with parameters:
+## 🧠 System Flow
 
-include_email = true
+Input → Extraction → Structuring → Storage
 
-contact_email_status_v2_verified = true
+- **Input:** Apollo search URL + result limit  
+- **Extraction:** Fetch lead data via Apify Apollo scraper  
+- **Processing:** Filter and map only relevant fields (verified emails, roles, company data)  
+- **Output:** Clean, structured lead dataset stored in Google Sheets  
 
-max_result = user input
+---
 
-url = Apollo URL from form
+## 🔧 Tech Stack
 
-Edit Fields
+- n8n (workflow orchestration)  
+- Apify (Apollo scraper actor)  
+- Google Sheets API  
+- HTTP APIs  
 
-Extracts and maps relevant fields:
+---
 
-First/Last Name
+## 📌 Key Features
 
-LinkedIn URL
+- Extracts only **verified emails** to ensure data quality  
+- Fully automated flow from input → structured output  
+- Dynamic sheet creation for different datasets  
+- Eliminates manual export and cleaning effort  
 
-Title
+---
 
-Email (verified only)
+## ⚠️ Note
 
-Organization details (name, website, LinkedIn, domain)
+Requires valid Apollo search URLs and configured API credentials. Some configurations may need updates depending on API limits or changes.
 
-Location (country, state, city)
+---
 
-Departments & Seniority
+## 👤 Author
 
-Google Sheets (Append/Update)
-
-Saves all extracted records into the specified Google Sheet.
-
-📊 Data Captured
-
-Personal Info: First name, Last name, LinkedIn, Email (verified only), Job Title, Seniority
-
-Organization Info: Name, Website, LinkedIn, Domain, Location
-
-Additional Info: Departments, City, State, Country
-
-🚀 Setup Instructions
-
-Import the Workflow
-
-Open n8n → Workflows → Import from File → Upload Apollo.json.
-
-Configure Credentials
-
-Google Sheets OAuth2 API → Add your Google account.
-
-Apify API Token → Replace placeholder with your Apify token in the HTTP Request headers.
-
-Publish Form
-
-Copy the form webhook URL from the Form Trigger node.
-
-Share it with your team/clients to input Apollo search URLs.
-
-Run the Workflow
-
-Upon form submission, the workflow automatically runs and populates your chosen Google Sheet.
-
-🛠 Requirements
-
-n8n (latest version)
-
-Google Account with Sheets access
-
-Apify Account with Apollo Scraper access (microworlds~apollo-scraper)
-
-🔑 Notes
-
-Only verified emails are captured (contact_email_status_v2_verified = true).
-
-The workflow dynamically creates or updates Google Sheets per user input.
-
-Max results are limited by your Apify actor/plan.
-
-Ensure correct Apollo URLs (people/company search links) are provided for best results.
+Shobhit Mandal
+Contact: shobhitmandal0209@gmail.com
